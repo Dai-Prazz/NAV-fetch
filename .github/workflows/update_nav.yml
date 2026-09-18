@@ -1,0 +1,36 @@
+name: Daily SSIS NAV Update
+
+on:
+  schedule:
+    # Runs at 11:30 AM UTC (5:15 PM NPT) every day
+    - cron: '30 11 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  scrape-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright beautifulsoup4
+          playwright install chromium
+
+      - name: Run Scraper
+        run: python scrape.py
+
+      - name: Commit and Push Updated NAV
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add nav.txt
+          git commit -m "Automated daily SSIS NAV update" || exit 0
+          git push
