@@ -2,11 +2,9 @@ name: Daily SSIS NAV Update
 
 on:
   schedule:
-    # Runs at 11:30 AM UTC (5:15 PM NPT) every day
-    - cron: '33 05 * * *'
-  workflow_dispatch: # Allows manual trigger from GitHub UI
+    - cron: '03 04 * * *'
+  workflow_dispatch: 
 
-  # Add this permissions block
 permissions:
   contents: write
 
