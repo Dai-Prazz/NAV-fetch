@@ -19,12 +19,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip' # Speeds up dependency resolution
 
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install playwright beautifulsoup4
-          playwright install chromium
+          playwright install chromium --with-deps
 
       - name: Run Scraper
         run: python scrape.py
