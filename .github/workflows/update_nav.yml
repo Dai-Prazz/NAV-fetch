@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          # Removed cache: 'pip' to prevent the missing file error
 
       - name: Install Dependencies
         run: |
